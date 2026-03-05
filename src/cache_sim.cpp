@@ -55,3 +55,40 @@ static int sim_FIFO(int k, vector<int> req){
     }
     return misses;
 }
+
+//LRU function
+//if miss and cache is full: kick the one with the smallest lastusedtime
+
+static int sim_LRU(int k, vector<int> req){
+    vector<int> cache;
+    vector<int> lastUsedTime;
+    int misses = 0;
+    int t = 0;
+    
+    for(int x : req){
+        t++;
+        int idx = findIndex(cache, x);
+        if(idx != -1){
+            lastUsedTime[idx] = t;
+            continue;
+        }
+
+        misses++;
+
+        if(cache.size() < k){
+            cache.push_back(x);
+            lastUsedTime.push_back(t);
+        }
+        else{
+            int victimPos = 0;
+            for(int i = 1; i < k; i++){
+                if(lastUsedTime[i] < lastUsedTime[victimPos]) victimPos = i;
+
+            }
+            cache[victimPos] = x;
+            lastUsedTime[victimPos] = t;
+
+        }
+    }
+    return misses;
+}
