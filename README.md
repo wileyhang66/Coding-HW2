@@ -45,4 +45,15 @@ replacement policies will first fill the cache with {1, 2, 3}. OPTFF will kickou
 1 and 2 are requested again before 3. In the next 3 requests there will only be one cache miss. LRU or FIFO on the other hand would
 replace 1 in the cache {1, 2, 3}. Immediately after LRU and FIFO cache {2, 3, 4} there will be another cache miss because
 neither replacement policy is aware of future requests for 1. OPTFF's lookahead allows it to evict the item whose next instance
-is furthest in the future, which minimizes future cache misses.  
+is furthest in the future, which minimizes future cache misses. 
+
+Q3:
+Let OPTFF be Belady's Farthest-in-Future algorithm and A be any offline algorithm that knows the full request sequence.
+
+Proof by contradiction
+-> Lets assume that algorithm A will produce less cache misses than OPTFF with the same cache size k and request sequence
+-> Suppose that at some point both caches are full and OPTFF and A choose to evict pages v_OPT and v_A respectively.
+By definition of Farthest-in-Future v_OPT is the page whose next request is farther in the future than the other cached values.
+-> Because A is aware of future values the solution that would produce the most immediate hits in the cache would be to evict the page
+that reoccurs last out of the cached values.
+-> By this logic v_OPT and v_A should be the same page, and OPTFF would not produce anymore cache misses than A.
