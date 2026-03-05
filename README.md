@@ -2,7 +2,7 @@
 Programming Assignment 2: Greedy Algorithms
 
 Team Member:
-Wiley Hang
+Wiley Hang 49063083
 Mary Alice Hartman
 
 
@@ -48,12 +48,17 @@ neither replacement policy is aware of future requests for 1. OPTFF's lookahead 
 is furthest in the future, which minimizes future cache misses. 
 
 Q3:
-Let OPTFF be Belady's Farthest-in-Future algorithm and A be any offline algorithm that knows the full request sequence.
 
-Proof by contradiction
--> Lets assume that algorithm A will produce less cache misses than OPTFF with the same cache size k and request sequence
--> Suppose that at some point both caches are full and OPTFF and A choose to evict pages v_OPT and v_A respectively.
-By definition of Farthest-in-Future v_OPT is the page whose next request is farther in the future than the other cached values.
--> Because A is aware of future values the solution that would produce the most immediate hits in the cache would be to evict the page
-that reoccurs last out of the cached values.
--> By this logic v_OPT and v_A should be the same page, and OPTFF would not produce anymore cache misses than A.
+We can proof the OPTFF has the fewest possible misses among all offline algorithm on any fixed requested sequence by using exchange argument.
+
+Let: 
+O = OPTFF
+A = any other offline algorithm.
+
+Consider the first time where O and A make different decision on which element to kick out when the cache is full. Suppose O evicted item x, but A evited item y. So by definition of O the next request of x occurs no sooner than the next request y.
+
+x will always be needed sooner than y.
+
+If let's say A also picked x as the eviction, then the number of cache misses will not be changed.
+
+By repeatedly applying t this exchange argument, we can transform any algorithm A into O without increasing the number of misses. So we can conclude OPTFF produces no more cache misses than any other offline algorithm and it is optimal.
