@@ -6,11 +6,11 @@ Wiley Hang 49063083
 Mary Alice Hartman
 
 
-compile command:
+# compile command:
 
 g++ -std=c++17 src/cache_sim.cpp -o cache
 
-Run:
+# Run:
 
 ./cache data/file1.in
 ./cache data/file2.in
@@ -70,7 +70,7 @@ A = any other offline algorithm.
 
 Consider the first time where O and A make different decision on which element to kick out when the cache is full. Suppose O evicted item x, but A evited item y. So by definition of O the next request of x occurs no sooner than the next request y.
 
-x will always be needed sooner than y.
+x will always be needed later than y.
 
 If let's say A also picked x as the eviction, then the number of cache misses will not be changed.
 
