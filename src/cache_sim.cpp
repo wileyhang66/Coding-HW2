@@ -150,9 +150,9 @@ int main(int argc, char** argv){
     int fifo_miss = sim_FIFO(k, req);
     int lru_miss = sim_LRU(k, req);
     int optff_miss = sim_OPTFF(k, req);
-    cout << "FIFO Misses: " << fifo_miss << "\n";
-    cout << "LRU Misses: " << lru_miss << "\n";
-    cout << "OPTFF Misses: " << optff_miss << "\n";
+    cout << "FIFO: " << fifo_miss << "\n";
+    cout << "LRU: " << lru_miss << "\n";
+    cout << "OPTFF: " << optff_miss << "\n";
 
     return 0;
 }
