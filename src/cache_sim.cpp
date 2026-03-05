@@ -92,3 +92,67 @@ static int sim_LRU(int k, vector<int> req){
     }
     return misses;
 }
+
+/*
+OPTFF
+if miss and cache is full, 
+for each item in cache, look ahead in the request sequence, find when it will be used next.
+kick the one used farthest in the future or never will be used*/
+
+static int sim_OPTFF(int k, vector<int> req){
+    vector<int> cache;
+    int misses = 0;
+
+    for(int i = 0; i < req.size(); i++){
+        int x = req[i];
+        int idx = findIndex(cache,x);
+        if(idx != -1){
+            continue;
+        }
+        misses++;
+
+        if ((int)cache.size() < k) {
+            cache.push_back(x);
+        }
+        else{
+            int victimPos = 0;
+            int farthest = -1;
+
+            for(int c = 0; c < k; c++){
+                int item = cache[c];
+                int nextUse = 1000000000;
+                for(int j = i+1; j<req.size(); j++){
+                    if(req[j] == item){
+                        nextUse = j;
+                        break;
+                    }
+                }
+                if(nextUse > farthest){
+                    farthest = nextUse;
+                    victimPos = c;
+                }
+            }
+            cache[victimPos] = x;
+        }
+    }
+    return misses;
+}
+
+int main(int argc, char** argv){
+    if(argc != 2){
+        cerr << "Usage: " << argv[0] << "<input_file>\n";
+        return 1;
+    }
+
+    int k, m;
+    vector<int> req;
+    readInput(argv[1], k, m, req);
+    int fifo_miss = sim_FIFO(k, req);
+    int lru_miss = sim_LRU(k, req);
+    int optff_miss = sim_OPTFF(k, req);
+    cout << "FIFO Misses: " << fifo_miss << "\n";
+    cout << "LRU Misses: " << lru_miss << "\n";
+    cout << "OPTFF Misses: " << optff_miss << "\n";
+
+    return 0;
+}
