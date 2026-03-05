@@ -5,7 +5,7 @@
 
 using namespace std;
 
-static int findIndex(vector<int>& cache, int x){
+static int findIndex(const vector<int>& cache, int x){
     for(int i = 0; i < (int)cache.size(); i++){
         if(cache[i] == x){
             return i;
@@ -14,7 +14,7 @@ static int findIndex(vector<int>& cache, int x){
     return -1;
 }
 
-static void readInput(string filename, int k, int m, vector<int> req){
+static void readInput(const string& filename, int& k, int& m, vector<int>& req){
     ifstream in (filename);
     if(!in){
         cerr << "Error" << filename << "\n";
@@ -27,7 +27,7 @@ static void readInput(string filename, int k, int m, vector<int> req){
 
 //FIFO 
 //If miss and cache is full, kick the one that entered earliest..
-static int sim_FIFO(int k, vector<int> req){
+static int sim_FIFO(int k, const vector<int>& req){
     vector<int> cache;
     vector<int> insertedTime;
     int misses = 0;
@@ -59,7 +59,7 @@ static int sim_FIFO(int k, vector<int> req){
 //LRU function
 //if miss and cache is full: kick the one with the smallest lastusedtime
 
-static int sim_LRU(int k, vector<int> req){
+static int sim_LRU(int k, const vector<int>& req){
     vector<int> cache;
     vector<int> lastUsedTime;
     int misses = 0;
@@ -99,7 +99,7 @@ if miss and cache is full,
 for each item in cache, look ahead in the request sequence, find when it will be used next.
 kick the one used farthest in the future or never will be used*/
 
-static int sim_OPTFF(int k, vector<int> req){
+static int sim_OPTFF(int k, const vector<int>& req){
     vector<int> cache;
     int misses = 0;
 
@@ -150,9 +150,9 @@ int main(int argc, char** argv){
     int fifo_miss = sim_FIFO(k, req);
     int lru_miss = sim_LRU(k, req);
     int optff_miss = sim_OPTFF(k, req);
-    cout << "FIFO: " << fifo_miss << "\n";
-    cout << "LRU: " << lru_miss << "\n";
-    cout << "OPTFF: " << optff_miss << "\n";
+    cout << "FIFO : " << fifo_miss << "\n";
+    cout << "LRU : " << lru_miss << "\n";
+    cout << "OPTFF : " << optff_miss << "\n";
 
     return 0;
 }
