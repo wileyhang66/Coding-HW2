@@ -17,6 +17,19 @@ Run:
 ./cache data/file3.in
 ./cache data/q2.in
 
+# Example
+Input file: tests/example.in
+
+Run:
+
+./cache tests/example.in
+
+Expected output:
+
+FIFO : 7
+LRU : 7
+OPTFF : 5
+
 
 Testing Output Q1;
 
